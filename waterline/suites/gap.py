@@ -14,11 +14,13 @@ class GAPBenchmark(Benchmark):
         if self.suite.enable_openmp:
             args.append("-fopenmp")
         self.shell(
-            "gclang++",
+            "wllvm++",
             source_file,
             "-std=c++11",
             "-O1",
             "-Wall",
+            # "-c",
+            # "-emit-llvm",
             *args,
             "-o",
             output,

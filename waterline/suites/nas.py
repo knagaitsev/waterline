@@ -64,10 +64,13 @@ class NAS(Suite):
         (self.src / "bin").mkdir(exist_ok=True)
         make_def_path = self.src / "config" / "make.def"
         with make_def_path.open("w") as cfg:
-            cfg.write(f"CC    = gclang\n")
-            cfg.write(f"CLINK = gclang\n")
+            cfg.write(f"CC    = wllvm\n")
+            cfg.write(f"CLINK = wllvm\n")
             cfg.write(f"C_LIB = -lm\n")
             cfg.write(f"C_INC = -I../common\n")
+
+            # baseline_flags.append("-c")
+            # baseline_flags.append("-emit-llvm")
             if self.enable_openmp:
                 cfg.write(f"CFLAGS = {' '.join(baseline_flags)} -fPIC -fopenmp\n")
             else:

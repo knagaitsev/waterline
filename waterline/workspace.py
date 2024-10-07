@@ -69,8 +69,9 @@ class Workspace:
                 print(f"  {benchmark.name}")
 
     def extract_bitcode(self, input, output):
-        self.shell("get-bc", "-o", output, input)
+        self.shell("extract-bc", "-o", output, input)
         self.shell("llvm-dis", output)
+        # self.shell("cp", input, output)
 
     def add_pipeline(self, pipeline):
         self.pipelines[pipeline.name] = pipeline
