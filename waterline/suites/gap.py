@@ -9,6 +9,10 @@ class GAPBenchmark(Benchmark):
 
         args = []
 
+        env={}
+        env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
+        env["LLVM_COMPILER"] = "clang"
+
         if not self.suite.enable_exceptions:
             args.append("-fno-exceptions")
         if self.suite.enable_openmp:
@@ -24,6 +28,7 @@ class GAPBenchmark(Benchmark):
             *args,
             "-o",
             output,
+            env=env,
         )
 
     def link(self, object, output, linker):

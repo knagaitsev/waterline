@@ -19,8 +19,12 @@ class NASBenchmark(Benchmark):
         """
         Compile this benchmark to a certain output directory
         """
+
+        env={}
+        env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
+        env["LLVM_COMPILER"] = "clang"
         self.shell(
-            "make", "-C", self.suite.src, self.name, f"CLASS={self.suite.suite_class}"
+            "make", "-C", self.suite.src, self.name, f"CLASS={self.suite.suite_class}", env=env
         )
         # if that compiled, copy the binary to the right location
         compiled = self.suite.src / "bin" / (self.name + "." + self.suite.suite_class)
