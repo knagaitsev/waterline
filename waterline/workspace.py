@@ -272,11 +272,18 @@ class Workspace:
         return results
 
     def shell(self, *args, **kwargs):
-        # print('running: ', *args)
+        env=os.environ.copy()
+        env["ARCH"] = "riscv"
+        env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
+        env["LLVM_COMPILER"] = "clang"
+        print(env["LD_LIBRARY_PATH"])
+
+        print('running: ', *args)
+        print('dir: ', self.dir)
         with open(self.dir / "output.txt", "a+") as out:
             out.write("\n\n")
             out.write("$ " + " ".join(map(str, args)) + "\n")
             out.flush()
-            proc = subprocess.Popen(args, stdout=out, stderr=out, **kwargs)
+            proc = subprocess.Popen(args, stdout=out, stderr=out, env=env, **kwargs)
             if not proc.wait() == 0:
                 raise RuntimeError("failed to run", *args)

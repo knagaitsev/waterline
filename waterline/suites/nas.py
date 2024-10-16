@@ -5,7 +5,7 @@ import waterline.utils
 import shutil
 
 baseline_flags = [
-    "-std=c89",
+    "-std=c99",
     "-O1",
     "-Xclang",
     "-disable-llvm-passes",
@@ -20,14 +20,15 @@ class NASBenchmark(Benchmark):
         Compile this benchmark to a certain output directory
         """
 
-        env={}
-        env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
-        env["LLVM_COMPILER"] = "clang"
+        bench_class = self.suite.suite_class
+        # if self.name == "is":
+        #     bench_class = "B"
+
         self.shell(
-            "make", "-C", self.suite.src, self.name, f"CLASS={self.suite.suite_class}", env=env
+            "make", "-C", self.suite.src, self.name, f"CLASS={bench_class}"
         )
         # if that compiled, copy the binary to the right location
-        compiled = self.suite.src / "bin" / (self.name + "." + self.suite.suite_class)
+        compiled = self.suite.src / "bin" / (self.name + "." + bench_class)
         shutil.copy(compiled, output)
 
     def link(self, object, dest, linker):

@@ -9,10 +9,6 @@ class GAPBenchmark(Benchmark):
 
         args = []
 
-        env={}
-        env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
-        env["LLVM_COMPILER"] = "clang"
-
         if not self.suite.enable_exceptions:
             args.append("-fno-exceptions")
         if self.suite.enable_openmp:
@@ -26,9 +22,11 @@ class GAPBenchmark(Benchmark):
             # "-c",
             # "-emit-llvm",
             *args,
+            "-msmall-data-limit=0",
+            "-lomp",
+            "-L/home/kir/beandip/beandip/local/lib",
             "-o",
             output,
-            env=env,
         )
 
     def link(self, object, output, linker):
@@ -36,7 +34,7 @@ class GAPBenchmark(Benchmark):
             self.suite.workspace,
             [object],
             output,
-            args=["-fopenmp", "-lm", "-lstdc++", "-lpthread"],
+            args=["-fopenmp", "-lm", "-lstdc++", "-lpthread", "-lomp"],
         )
 
     def run_configs(self):
