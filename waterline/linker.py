@@ -12,7 +12,7 @@ class Linker:
     """
 
     # self.command: the linker command
-    command = "clang++"
+    command = "wllvm++"
     # self.args: additional arguments to be passed to the linker
     args = []
 
