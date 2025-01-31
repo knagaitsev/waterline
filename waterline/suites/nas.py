@@ -33,8 +33,12 @@ class NASBenchmark(Benchmark):
 
     def link(self, object, dest, linker):
         # todo: use linker
+        args = ["-fPIC", "-lm"]
+        if self.enable_openmp:
+            args.append("-fopenmp")
+
         linker.link(
-            self.suite.workspace, [object], dest, args=["-fPIC", "-lm", "-fopenmp"]
+            self.suite.workspace, [object], dest, args=args
         )
 
 
