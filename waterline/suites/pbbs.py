@@ -161,7 +161,7 @@ class PBBS(Suite):
             "--depth",
             "1",
             "--branch",
-            "gclang"
+            "wllvm"
         )
         
         self.workspace.shell(
