@@ -78,9 +78,10 @@ class NAS(Suite):
             # baseline_flags.append("-emit-llvm")
             if self.enable_openmp:
                 cfg.write(f"CFLAGS = {' '.join(baseline_flags)} -fPIC -fopenmp\n")
+                cfg.write("CLINKFLAGS = -fPIC -lm -fopenmp\n")
             else:
                 cfg.write(f"CFLAGS = {' '.join(baseline_flags)} -fPIC\n")
-            cfg.write("CLINKFLAGS = -fPIC -lm -fopenmp\n")
+                cfg.write("CLINKFLAGS = -fPIC -lm\n")
             cfg.write("UCC = cc -O\n")
             cfg.write("BINDIR	= ../bin\n")
             cfg.write("RAND	= randdp\n")
