@@ -280,6 +280,8 @@ class Workspace:
             env["ARCH"] = "riscv"
             env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
 
+        print(env)
+
         print('running: ', *args)
         print('dir: ', self.dir)
         with open(self.dir / "output.txt", "a+") as out:

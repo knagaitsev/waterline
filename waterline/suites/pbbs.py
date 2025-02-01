@@ -182,5 +182,5 @@ class PBBS(Suite):
             "ext",
             "-C",
             self.src,
-            "-j48"
+            # "-j48"
         )
