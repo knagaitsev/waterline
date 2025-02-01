@@ -273,10 +273,12 @@ class Workspace:
 
     def shell(self, *args, **kwargs):
         env=os.environ.copy()
-        env["ARCH"] = "riscv"
-        env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
+        # env vars for wllvm
         env["LLVM_COMPILER"] = "clang"
-        print(env["LD_LIBRARY_PATH"])
+        env["BINUTILS_TARGET_PREFIX"] = "llvm"
+        if os.getenv('VLG_ARCH_RISCV') is not None:
+            env["ARCH"] = "riscv"
+            env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
 
         print('running: ', *args)
         print('dir: ', self.dir)
