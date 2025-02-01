@@ -177,6 +177,7 @@ class PBBS(Suite):
             cwd=self.src
         )
 
+        self.workspace.enable_wllvm_target_prefix = True
         self.workspace.shell(
             "make",
             "ext",
@@ -184,3 +185,4 @@ class PBBS(Suite):
             self.src,
             # "-j48"
         )
+        self.workspace.enable_wllvm_target_prefix = False

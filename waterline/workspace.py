@@ -47,6 +47,10 @@ class Workspace:
         self.results_dir = self.dir / "results"
         self.results_dir.mkdir(exist_ok=True)
 
+        # this can mess up extract-bc calls, so we should
+        # only turn it on at specific times
+        self.enable_wllvm_target_prefix = False
+
         baseline = Pipeline("baseline")
         baseline.add_stage(NopStage())
         self.add_pipeline(baseline)
@@ -276,9 +280,12 @@ class Workspace:
         # env vars for wllvm
         env["LLVM_COMPILER_PATH"] = "/pool/kir/vlg/village/local/bin"
         env["LLVM_COMPILER"] = "clang"
-        env["BINUTILS_TARGET_PREFIX"] = "llvm"
+        # this can be set conditionally
+        if self.enable_wllvm_target_prefix:
+            env["BINUTILS_TARGET_PREFIX"] = "llvm"
         if os.getenv('VLG_ARCH_RISCV') is not None:
             env["ARCH"] = "riscv"
+            # this should always be set when riscv
             env["BINUTILS_TARGET_PREFIX"] = "riscv64-unknown-linux-gnu"
 
         print(env)
