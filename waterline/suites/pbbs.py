@@ -133,8 +133,13 @@ class PBBSBenchmark(Benchmark):
     def link(self, object, dest, linker):
         # todo: use linker
         # turning -fopenmp here does not disable OpenMP when the original bitcode was already built with it
+
+        args = ["-fPIC", "-lm"]
+        if self.suite.enable_openmp:
+            args.append("-fopenmp")
+            
         linker.link(
-            self.suite.workspace, [object], dest, args=["-fPIC", "-lm", "-fopenmp"]
+            self.suite.workspace, [object], dest, args=args
         )
 
 
