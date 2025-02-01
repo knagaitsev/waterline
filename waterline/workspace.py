@@ -274,6 +274,7 @@ class Workspace:
     def shell(self, *args, **kwargs):
         env=os.environ.copy()
         # env vars for wllvm
+        env["LLVM_COMPILER_PATH"] = "/pool/kir/vlg/village/local/bin"
         env["LLVM_COMPILER"] = "clang"
         env["BINUTILS_TARGET_PREFIX"] = "llvm"
         if os.getenv('VLG_ARCH_RISCV') is not None:
